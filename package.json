@@ -1,0 +1,48 @@
+{
+  "name": "lizzygram_common_data",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "jest",
+    "jest:watchAll": "jest --watchAll",
+    "tsc": "node ./node_modules/.bin/tsc",
+    "release": "np --branch=main --yolo --no-yarn --no-2fa",
+    "build:lib": "cross-env NODE_ENV=\"production\" rm -rf dist && tsc --project tsconfig.lib.json",
+    "copy:types:file": "cp src/types.ts dist/types.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "browserslist": {
+    "production": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "peerDependencies": {
+    "typescript": "^4.4.4"
+  },
+  "devDependencies": {
+    "fmagic": "^1.1.0",
+    "@types/express": "4.17.13",
+    "@types/jest": "^27.0.3",
+    "@types/node": "^17.0.5",
+    "@types/multer": "^1.4.7",
+    "copyfiles": "^2.4.1",
+    "cross-env": "^7.0.3",
+    "identity-obj-proxy": "^3.0.0",
+    "jest": "^27.4.5",
+    "ts-jest": "^27.1.2",
+    "ts-loader": "^9.2.6",
+    "ts-node": "^10.4.0",
+    "typescript": "^4.5.4",
+    "waait": "^1.0.5"
+  }
+}
