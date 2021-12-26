@@ -1,6 +1,6 @@
 {
-  "name": "lizzygram_common_data",
-  "version": "1.0.0",
+  "name": "lizzygram-common-data",
+  "version": "0.0.0",
   "description": "",
   "main": "dist/index.js",
   "scripts": {
