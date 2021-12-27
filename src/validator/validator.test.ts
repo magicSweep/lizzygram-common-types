@@ -5,6 +5,32 @@ import {
   isValidDesc,
   isValidPhotoFileFrontend,
 } from ".";
+import wait from "waait";
+
+//const wait = () => new Promise(resolve => setTimeout(resolve, 0));
+
+/* test.only("test", async () => {
+  const f = (one: any, two: any) => {
+    throw new Error("Hello");
+    return one + two;
+  };
+
+  const withAsync = async (res: any) => {
+    return res;
+  };
+
+  let res;
+
+  withAsync(f(1, 2))
+    .then((r) => {
+      res = r;
+    })
+    .catch((err) => "Error");
+
+  await wait(100);
+
+  expect(res).toEqual(3);
+}); */
 
 describe("isValidDate", () => {
   const possibilities = [
@@ -150,12 +176,21 @@ describe("isValidPhotoFileFrontend", () => {
         mimetype: "application/json",
         size: 123,
       },
+      expected:
+        'Неверный тип файла - {"mimetype":"application/json","size":123}',
+    },
+    {
+      count: 1,
+      photoFile: {
+        type: "application/json",
+        size: 123,
+      },
       expected: "Файл должен быть типа: jpeg, png, jpg | application/json",
     },
     {
       count: 2,
       photoFile: {
-        mimetype: "image/png",
+        type: "image/png",
         size: 120001024,
       },
       expected: "Максимальный размер файла 21 Mb. | 120001024",
@@ -182,7 +217,7 @@ describe("isValidPhotoFileFrontend", () => {
     {
       count: 6,
       photoFile: {
-        mimetype: "image/png",
+        type: "image/png",
         size: 12024,
       },
       expected: true,

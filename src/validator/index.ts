@@ -6,34 +6,17 @@ import {
   DateUTCString,
   JsonString,
 } from "./../types";
+import {
+  isObject,
+  isValidFileFormat,
+  hasProperties,
+  hasTrueValue,
+  maxFileSizeMB,
+  fromBytesToMB,
+} from "./helper";
 
-export const isNotObjOrNull = (type: any) =>
-  type === null || typeof type !== "object";
-
-// max - file size in MB, value - file size in bytes
-export const maxFileSizeMB = (max: number, val: number) =>
-  fromBytesToMB(val) <= max;
-
-export const fromBytesToMB = (bytes: number) => {
-  if (bytes === 0) return 0;
-
-  return bytes / (1024 * 1024);
-};
-
-// @type - MIME type like image/jpeg or application/json
-export const isValidFileFormat = (formats: string[], type: string) => {
-  const format = type.split("/")[1];
-
-  return formats.includes(format);
-};
-
-export const hasTrueValue = (obj: any) => {
-  for (let prop in obj) {
-    if (obj[prop] === true) return true;
-  }
-
-  return false;
-};
+export const photoFileFormats = ["jpeg", "png", "jpg"];
+export const maxPhotoFileSize = 21; // MB
 
 export const isValidDate = cond<DateUTCString, true | string>([
   //[(val: string) => val === undefined, (val: Date) => true],
@@ -68,6 +51,28 @@ export const isValidPhotoFileBackend = cond<Express.Multer.File, string | true>(
   [
     [
       (file: Express.Multer.File) =>
+        isObject(file) === false || hasProperties(["mimetype"], file) === false,
+      (file: Express.Multer.File) =>
+        `Неверный тип файла - ${JSON.stringify(file)}`,
+    ],
+
+    [
+      (file: Express.Multer.File) =>
+        isValidFileFormat(photoFileFormats, file.mimetype) === false,
+      (file: Express.Multer.File) =>
+        `Файл должен быть типа: ${photoFileFormats.join(", ")} | ${
+          file.mimetype
+        }`,
+    ],
+
+    [() => true, () => true],
+  ]
+);
+
+/*  export const isValidPhotoFileBackend = cond<Express.Multer.File, string | true>(
+  [
+    [
+      (file: Express.Multer.File) =>
         isNotObjOrNull(file) || file.mimetype === undefined,
       (file: Express.Multer.File) =>
         `Неверный тип файла - ${JSON.stringify(file)}`,
@@ -75,19 +80,42 @@ export const isValidPhotoFileBackend = cond<Express.Multer.File, string | true>(
 
     [
       (file: Express.Multer.File) =>
-        isValidFileFormat(["jpeg", "png", "jpg"], file.mimetype) === false,
+        isValidFileFormat(photoFileFormats, file.mimetype) === false,
       (file: Express.Multer.File) =>
-        `Файл должен быть типа: jpeg, png, jpg | ${file.mimetype}`,
+        `Файл должен быть типа: ${photoFileFormats.join(", ")} | ${file.mimetype}`,
     ],
 
     [() => true, () => true],
   ]
-);
+);  */
 
-export const isValidPhotoFileFrontend = compose<
-  Express.Multer.File,
-  string | true
->(
+export const isValidPhotoFileFrontend = cond<File, string | true>([
+  [
+    (file: File) =>
+      isObject(file) === false ||
+      hasProperties(["type", "size"], file) === false,
+    (file: File) => `Неверный тип файла - ${JSON.stringify(file)}`,
+  ],
+
+  [
+    (file: File) => isValidFileFormat(photoFileFormats, file.type) === false,
+    (file: File) =>
+      `Файл должен быть типа: ${photoFileFormats.join(", ")} | ${file.type}`,
+  ],
+
+  [
+    (file: File) => file.size === undefined,
+    (file: File) => `Неверный тип файла - ${JSON.stringify(file)}`,
+  ],
+  [
+    (file: File) => maxFileSizeMB(maxPhotoFileSize, file.size) === false,
+    (file: File) =>
+      `Максимальный размер файла ${maxPhotoFileSize} Mb. | ${file.size}`,
+  ],
+  [() => true, () => true],
+]);
+
+/* export const isValidPhotoFileFrontend = compose<File, string | true>(
   (file: Express.Multer.File) => ({
     file,
     validRes: isValidPhotoFileBackend(file),
@@ -112,31 +140,7 @@ export const isValidPhotoFileFrontend = compose<
     (data: { file: Express.Multer.File; validRes: string | true }) =>
       data.validRes
   )
-);
-/* 
-(file: Express.Multer.File) => {
-  if (file === undefined) return `We've got no photo file`;
-
-  if (
-    file === null ||
-    typeof file !== "object" ||
-    file.mimetype === undefined
-    // || file.size === undefined
-  )
-    return `Wrong file - ${JSON.stringify(file)}`;
-
-  /* 
-    // FILE SIZE WE CHECK WITH MULTER LIMITS 
-    if (isLessThanMaxFileSizeMB(21, file.size) === false) {
-      return `Максимальный размер файла 21 Mb. | ${file.size}`;
-    } /
-
-  if (isValidFileFormat(["jpeg", "png", "jpg"], file.mimetype) === false) {
-    return `Файл должен быть типа: jpeg, png, jpg | ${file.mimetype}`;
-  }
-
-  return true;
-}; */
+); */
 
 export const isValidDesc = (val: string) => {
   //console.log("VALIDATE", val);
@@ -145,18 +149,9 @@ export const isValidDesc = (val: string) => {
   return true;
 };
 
-/* compose(
-    (tags: JsonString) => {
-      try {
-        return JSON.parse(tags);
-      } catch (err) {
-        //console.error("Can not parse tags", JSON.stringify(tags));
-        return null;
-      }
-    }, */
-export const isValidTags = cond([
+export const isValidTags = cond<TagsData, string | true>([
   [
-    isNotObjOrNull,
+    (tags: TagsData) => isObject(tags) === false,
     (tags: TagsData) =>
       `Какая-то ошибочка... | -2342- | ${JSON.stringify(tags)}`,
   ],
