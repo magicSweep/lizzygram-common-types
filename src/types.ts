@@ -1,4 +1,4 @@
-export type ResponseStatus = "successs" | "error";
+export type ResponseStatus = "success" | "error";
 
 export type JsonString = string;
 // Date.toUTCString();
@@ -29,6 +29,7 @@ export type TagsData = { [id: string]: true };
 
 // COMMON TYPES
 export type ImgExt = "jpeg" | "jpg" | "png";
+
 export type FirestoreDate = {
   toDate: () => Date;
 };
