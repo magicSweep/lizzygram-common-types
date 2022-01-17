@@ -15,7 +15,7 @@ import {
   fromBytesToMB,
 } from "./helper";
 
-export const photoFileFormats = ["jpeg", "png", "jpg"];
+export const photoFileFormats = ["jpeg", "png", "jpg", "webp"];
 export const maxPhotoFileSize = 21; // MB
 
 export const isValidDate = cond<DateUTCString, true | string>([
