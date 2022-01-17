@@ -1,3 +1,5 @@
+export type BuildFor = "lizzygram" | "portfolio";
+
 export type ResponseStatus = "success" | "error";
 
 export type JsonString = string;
