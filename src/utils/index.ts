@@ -1,13 +1,16 @@
 import { BuildFor } from "../types";
 
-let BUILD_FOR: BuildFor | "" = "";
+let GATSBY_BUILD_FOR: BuildFor | "" = "";
 
 export const getBuildFor = () => {
-  if (BUILD_FOR === "") BUILD_FOR = process.env.BUILD_FOR as BuildFor;
+  if (GATSBY_BUILD_FOR === "")
+    GATSBY_BUILD_FOR = process.env.GATSBY_BUILD_FOR as BuildFor;
 
-  if (BUILD_FOR === undefined) {
-    console.error("Do you forgot to initialize BUILD_FOR env variable?!");
+  if (GATSBY_BUILD_FOR === undefined) {
+    console.error(
+      "Do you forgot to initialize GATSBY_BUILD_FOR env variable?!"
+    );
   }
 
-  return BUILD_FOR;
+  return GATSBY_BUILD_FOR;
 };
