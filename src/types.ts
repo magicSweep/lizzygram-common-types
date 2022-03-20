@@ -29,6 +29,8 @@ export type WorkerRequest = {
 
 export type TagsData = { [id: string]: true };
 
+export type FavoriteData = { [userUid: string]: true };
+
 // COMMON TYPES
 export type ImgExt = "jpeg" | "jpg" | "png";
 
@@ -55,6 +57,7 @@ export interface Photo<T> {
   googleDriveId: string;
   imageExtention: ImgExt;
   addedByUserUID: string;
+  favoriteBy?: FavoriteData;
   // do we make changes by express
   isActive: boolean;
 }
