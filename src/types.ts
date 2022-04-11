@@ -1,31 +1,57 @@
 export type BuildFor = "lizzygram" | "portfolio";
 
-export type ResponseStatus = "success" | "error";
+//export type ResponseStatus = "success" | "error";
 
 export type JsonString = string;
 // Date.toUTCString();
 export type DateUTCString = string;
 
-export type WorkerResponse = {
-  status: ResponseStatus;
-  data?: {
-    [name: string]: any;
+export type WebImagesInfo = {
+  ids: string[];
+  urls?: Map<number, string>;
+};
+
+// RESPONSE | REQUEST
+
+export type WorkerResponse<T> = {
+  //status: ResponseStatus;
+  data: {
+    [name: string]: T;
   };
-  error?: {
+  /* error?: {
     msg: string;
     code?: number;
-  };
+  }; */
 };
 
 // type for backend
-export type WorkerRequest = {
+/* export type WorkerRequest = {
   photoFile: Express.Multer.File;
   photoId: string;
   userUid: string;
   description?: string;
   date?: DateUTCString;
   tags?: JsonString;
+}; */
+
+export type MainRequestData = {
+  file: any;
 };
+
+export type MainResponseData = {
+  base64: string;
+  aspectRatio: number;
+  imageExtention: string;
+  googleDriveId: string;
+  webImagesInfo: WebImagesInfo;
+};
+
+export type CleanUpRequestData = {
+  googleDriveId: string;
+  webImagesInfo: WebImagesInfo;
+};
+
+////////////////////////////
 
 export type TagsData = { [id: string]: true };
 
