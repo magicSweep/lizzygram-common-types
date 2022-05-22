@@ -15,9 +15,7 @@ export type WebImagesInfo = {
 
 export type WorkerResponse<T> = {
   //status: ResponseStatus;
-  data: {
-    [name: string]: T;
-  };
+  data: T;
   /* error?: {
     msg: string;
     code?: number;
@@ -38,16 +36,18 @@ export type MainRequestData = {
   file: any;
 };
 
-export type MainResponseData = {
-  base64: string;
+export type MainResponseData = Pick<
+  Photo<any>,
+  "base64" | "aspectRatio" | "imageExtention" | "googleDriveId"
+> & {
+  /*  base64: string;
   aspectRatio: number;
   imageExtention: string;
-  googleDriveId: string;
+  googleDriveId: string; */
   webImagesInfo: WebImagesInfo;
 };
 
-export type CleanUpRequestData = {
-  googleDriveId: string;
+export type CleanUpRequestData = Pick<Photo<any>, "googleDriveId"> & {
   webImagesInfo: WebImagesInfo;
 };
 
