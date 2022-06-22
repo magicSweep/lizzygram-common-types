@@ -38,11 +38,11 @@ export type MainRequestData = {
 
 export type MainResponseData = Pick<
   Photo<any>,
-  "base64" | "aspectRatio" | "imageExtention" | "googleDriveId"
+  "base64" | "aspectRatio" | "imageExtension" | "googleDriveId"
 > & {
   /*  base64: string;
   aspectRatio: number;
-  imageExtention: string;
+  imageExtension: string;
   googleDriveId: string; */
   webImagesInfo: WebImagesInfo;
 };
@@ -81,7 +81,7 @@ export interface Photo<T> {
   tags: TagsData;
 
   googleDriveId: string;
-  imageExtention: ImgExt;
+  imageExtension: ImgExt;
   addedByUserUID: string;
   favoriteBy?: FavoriteData;
   // do we make changes by express
