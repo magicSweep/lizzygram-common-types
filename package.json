@@ -26,6 +26,9 @@
       "last 1 safari version"
     ]
   },
+  "exports": {
+    "./config": "./dist/config.js"
+  },
   "peerDependencies": {
     "typescript": "^4.4.4"
   },

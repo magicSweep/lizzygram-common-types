@@ -14,9 +14,7 @@ import {
   maxFileSizeMB,
   fromBytesToMB,
 } from "./helper";
-
-export const photoFileFormats = ["jpeg", "png", "jpg", "webp"];
-export const maxPhotoFileSize = 21; // MB
+import { photoFileFormats, maxPhotoFileSize } from "./../config";
 
 export const isValidDate = cond<DateUTCString, true | string>([
   //[(val: string) => val === undefined, (val: Date) => true],
