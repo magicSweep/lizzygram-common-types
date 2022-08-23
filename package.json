@@ -29,6 +29,13 @@
   "exports": {
     "./config": "./dist/config.js"
   },
+  "typesVersions": {
+    "*": {
+      "config": [
+        "dist/config.d.ts"
+      ]
+    }
+  },
   "peerDependencies": {
     "typescript": "^4.4.4"
   },
