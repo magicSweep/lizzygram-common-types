@@ -13,43 +13,21 @@ export type WebImagesInfo = {
 
 // RESPONSE | REQUEST
 
-export type WorkerResponse<T> = {
-  //status: ResponseStatus;
-  data: T;
-  /* error?: {
-    msg: string;
-    code?: number;
-  }; */
+// WEB PHOTOS
+export type WebPhotosFileFieldName = "file";
+
+export type WebPhotosCleanupReq = {
+  webImagesInfo: WebImagesInfo;
 };
 
-// type for backend
-/* export type WorkerRequest = {
-  photoFile: Express.Multer.File;
-  photoId: string;
-  userUid: string;
-  description?: string;
-  date?: DateUTCString;
-  tags?: JsonString;
-}; */
-
-export type MainRequestData = {
-  file: any;
-};
-
-export type MainResponseData = Pick<
+export type WebPhotosResponseData = Pick<
   Photo<any>,
   "base64" | "aspectRatio" | "imageExtension" | "googleDriveId"
 > & {
-  /*  base64: string;
-  aspectRatio: number;
-  imageExtension: string;
-  googleDriveId: string; */
   webImagesInfo: WebImagesInfo;
 };
 
-export type CleanUpRequestData = Pick<Photo<any>, "googleDriveId"> & {
-  webImagesInfo: WebImagesInfo;
-};
+// ORIGINAL PHOTO STORE
 
 ////////////////////////////
 
@@ -64,15 +42,8 @@ export type FirestoreDate = {
   toDate: () => Date;
 };
 
-export interface Photo<T> {
+export type Media<T> = {
   id: any;
-  base64: string;
-
-  files: string[];
-  aspectRatio: number; //1.6
-  srcSet: string;
-  iconSrc: string;
-  src: string;
 
   _timestamp: Date | FirestoreDate;
   description: string;
@@ -80,10 +51,25 @@ export interface Photo<T> {
   yearsOld: number;
   tags: TagsData;
 
-  googleDriveId: string;
-  imageExtension: ImgExt;
   addedByUserUID: string;
   favoriteBy?: FavoriteData;
   // do we make changes by express
   isActive: boolean;
-}
+};
+
+export type Photo<T> = Media<T> & {
+  base64: string;
+  files: string[];
+  aspectRatio: number; //1.6
+  srcSet: string;
+  iconSrc: string;
+  src: string;
+
+  googleDriveId: string;
+  imageExtension: ImgExt;
+};
+
+export type Video<T> = Media<T> & {
+  videoId: string;
+  thumbnailsUrl: string;
+};
