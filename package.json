@@ -26,16 +26,6 @@
       "last 1 safari version"
     ]
   },
-  "exports": {
-    "./config": "./dist/config.js"
-  },
-  "typesVersions": {
-    "*": {
-      "config": [
-        "dist/config.d.ts"
-      ]
-    }
-  },
   "peerDependencies": {
     "typescript": "^4.4.4"
   },
@@ -46,7 +36,7 @@
     "@types/node": "^17.0.5",
     "copyfiles": "^2.4.1",
     "cross-env": "^7.0.3",
-    "fmagic": "^1.1.0",
+    "fmagic": "^1.1.5",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^27.4.5",
     "ts-jest": "^27.1.2",

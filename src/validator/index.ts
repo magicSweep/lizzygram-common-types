@@ -14,7 +14,7 @@ import {
   maxFileSizeMB,
   fromBytesToMB,
 } from "./helper";
-import { photoFileFormats, maxPhotoFileSize } from "./../config";
+import { photoFileFormats, maxPhotoFileSizeMb } from "./../config";
 
 export const isValidDate = cond<DateUTCString, true | string>([
   //[(val: string) => val === undefined, (val: Date) => true],
@@ -106,9 +106,9 @@ export const isValidPhotoFileFrontend = cond<File, string | true>([
     (file: File) => `Неверный тип файла - ${JSON.stringify(file)}`,
   ],
   [
-    (file: File) => maxFileSizeMB(maxPhotoFileSize, file.size) === false,
+    (file: File) => maxFileSizeMB(maxPhotoFileSizeMb, file.size) === false,
     (file: File) =>
-      `Максимальный размер файла ${maxPhotoFileSize} Mb. | ${file.size}`,
+      `Максимальный размер файла ${maxPhotoFileSizeMb} Mb. | ${file.size}`,
   ],
   [() => true, () => true],
 ]);

@@ -2,6 +2,8 @@ export * from "./validator";
 
 export * from "./utils";
 
+export * from "./config";
+
 export const photoSizes = [
   { width: 320, height: 180 },
   { width: 800, height: 640 },
