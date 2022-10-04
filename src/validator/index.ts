@@ -143,7 +143,7 @@ export const isValidPhotoFileFrontend = cond<File, string | true>([
 export const isValidDesc = (val: string) => {
   //console.log("VALIDATE", val);
   if (typeof val !== "string") return "Какая-то ошибочка... | -23678- ";
-  if (val !== undefined && val.length > 1200) return "Слишком длинно...";
+  if (val.length > 2000) return "Слишком длинно...";
   return true;
 };
 
@@ -161,3 +161,11 @@ export const isValidTags = cond<TagsData, string | true>([
         : `Добавьте хотя бы один тэг. | ${JSON.stringify(tags)}`,
   ],
 ]);
+
+export const validateVideoTitle = (title: string): true | string => {
+  if (typeof title !== "string") return "Title must be a string";
+
+  if (title.length > 100) return "Too long title...";
+
+  return true;
+};

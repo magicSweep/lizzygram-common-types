@@ -13,6 +13,28 @@ export type WebImagesInfo = {
 
 // RESPONSE | REQUEST
 
+// WEB VIDEOS
+
+export type WebVideoInfo = {
+  id: string;
+  thumbnailsUrl: string;
+};
+
+// file fieldName - file
+export type WebVideosReqBody = {
+  // video id for update
+  id?: string;
+  title: string;
+  description?: string;
+};
+
+export type WebVideosResponse = {
+  status: "success" | "error";
+  data?: WebVideoInfo;
+  // youtube errors - we must show to our user
+  message?: "Token expires" | "Quota exceeded";
+};
+
 // WEB PHOTOS
 export type WebPhotosFileFieldName = "file";
 
